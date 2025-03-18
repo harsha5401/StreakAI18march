@@ -9,7 +9,7 @@ pipeline {
       steps{
         git branch : main , url: 'https://github.com/harsha5401StreakAI18march.git'
       }
-    stega('docker login')
+    stage('docker login')
       steps {
         script{
           withcredentials([usernamepassword(credentailsID:DOCKER_CREDENTIALS_ID,usernameVariable:'DOCKER_USER',passwordvariable:'DOCKE_PASS')]){
