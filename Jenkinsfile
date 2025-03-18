@@ -7,7 +7,7 @@ pipeline {
   stages {
     stage ('clone repo') {
       steps {
-        git branch : main , url: 'https://github.com/harsha5401StreakAI18march.git'
+        git branch : 'main' , url: 'https://github.com/harsha5401StreakAI18march.git'
       }
     }
     stage('docker login'){
