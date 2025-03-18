@@ -14,7 +14,7 @@ pipeline {
     stage('docker login'){
       steps {
         script{
-          withcredentials([usernamepassword(credentailsID:DOCKER_CREDENTIALS_ID,usernameVariable:'DOCKER_USER',passwordvariable:'DOCKE_PASS')]){
+          withcredentials([usernamepassword(credentailsID: DOCKER_CREDENTIALS_ID,usernameVariable:'DOCKER_USER',passwordvariable:'DOCKER_PASS')]){
              sh "echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin"
                     }
                 }
@@ -31,6 +31,13 @@ pipeline {
             steps {
                 script {
                     sh "docker push ${DOCKER_IMAGE}"
+                }
+            }
+        }
+        stage('Push to Docker Hub') {
+            steps {
+                script {
+                    sh "docker rmi ${DOCKER_IMAGE}"
                 }
             }
         }
