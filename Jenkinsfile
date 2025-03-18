@@ -33,18 +33,11 @@ pipeline {
                 }
             }
         }
-        stage('Cleanup') {
+          stage('test') {
             steps {
-                sh 'docker logout'
-                sh 'docker rmi ${DOCKER_IMAGE} || true'
-                sh 'docker system prune -f'
-                deleteDir()
+                sh ' ./test_api.sh'
             }
-        }
-        stage('Deploy') {
-            steps {
-                sh "docker run -d -p 5000:5000 ${DOCKER_IMAGE}"
-            }
-        }
+          }
+        
     }
 }
