@@ -10,7 +10,7 @@ pipeline {
         git branch : main , url: 'https://github.com/harsha5401StreakAI18march.git'
       }
     }
-    stage('docker login')
+    stage('docker login'){
       steps {
         script{
           withcredentials([usernamepassword(credentailsID:DOCKER_CREDENTIALS_ID,usernameVariable:'DOCKER_USER',passwordvariable:'DOCKE_PASS')]){
@@ -18,7 +18,7 @@ pipeline {
                     }
                 }
             }
-        
+    }
     stage('Build Docker Image') {
             steps {
                 script {
