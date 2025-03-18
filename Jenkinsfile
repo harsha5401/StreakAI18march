@@ -4,9 +4,9 @@ pipeline {
     DOCKER_IMAGE = "harsha7633/flask:latest"
     DOCKER_CREDENTIALS_ID ="dockercred"
   }
-  stages{
-    stage ('clone repo'){
-      steps{
+  stages {
+    stage ('clone repo') {
+      steps {
         git branch : main , url: 'https://github.com/harsha5401StreakAI18march.git'
       }
     stage('docker login')
@@ -18,21 +18,21 @@ pipeline {
                 }
             }
         }
-        stage('Build Docker Image') {
+    stage('Build Docker Image') {
             steps {
                 script {
                     sh "docker build -t ${DOCKER_IMAGE} ."
                 }
             }
         }
-        stage('Push to Docker Hub') {
+    stage('Push to Docker Hub') {
             steps {
                 script {
                     sh "docker push ${DOCKER_IMAGE}"
                 }
             }
         }
-        stage('test') {
+    stage('test') {
             steps {
                 sh ' ./test_api.sh'
                 
