@@ -3,6 +3,7 @@ pipeline {
     environment {
         DOCKER_IMAGE = "harsha7633/flask-app:latest"
         DOCKER_CREDENTIALS_ID = "dockercred"
+        CONTAINER_NAME = "flask_app"
     }
     stages {
         stage('Clone Repository') {
@@ -26,6 +27,21 @@ pipeline {
                 }
             }
         }
+        stage('Run Container') {
+            steps {
+                script {
+                    sh "docker run -d -p 5000:5000 --name ${CONTAINER_NAME} ${DOCKER_IMAGE}"
+                    sleep 5 // Wait for container to start
+                }
+            }
+        }
+        stage('Run API Tests') {
+            steps {
+                script {
+                    sh './test_api.sh'
+                }
+            }
+        }
         stage('Push to Docker Hub') {
             steps {
                 script {
@@ -33,11 +49,17 @@ pipeline {
                 }
             }
         }
-          stage('test') {
+        stage('Cleanup') {
             steps {
-                sh ' ./test_api.sh'
+                script {
+                    sh """
+                        docker stop ${CONTAINER_NAME} || true
+                        docker rm ${CONTAINER_NAME} || true
+                        docker rmi -f ${DOCKER_IMAGE} || true
+                        docker system prune -f
+                    """
+                }
             }
-          }
-        
+        }
     }
 }
