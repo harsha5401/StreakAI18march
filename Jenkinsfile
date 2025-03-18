@@ -9,6 +9,7 @@ pipeline {
       steps {
         git branch : main , url: 'https://github.com/harsha5401StreakAI18march.git'
       }
+    }
     stage('docker login')
       steps {
         script{
@@ -17,7 +18,7 @@ pipeline {
                     }
                 }
             }
-        }
+        
     stage('Build Docker Image') {
             steps {
                 script {
