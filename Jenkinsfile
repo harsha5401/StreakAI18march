@@ -1,8 +1,6 @@
 pipeline {
   agent any
-  tools{
-    git 'git'
-  }
+
   environment {
     DOCKER_IMAGE = "harsha7633/flask:latest"
     DOCKER_CREDENTIALS_ID ="dockercred"
