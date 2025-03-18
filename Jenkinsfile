@@ -34,7 +34,7 @@ pipeline {
                 }
             }
         }
-        stage('Push to Docker Hub') {
+    stage('Remove image') {
             steps {
                 script {
                     sh "docker rmi ${DOCKER_IMAGE}"
